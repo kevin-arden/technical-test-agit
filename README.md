@@ -8,3 +8,7 @@
 - after that just run:
 
 ### `npm start`
+
+- in the login menu, you can enter with:
+  - username: admin
+  - password: admin
