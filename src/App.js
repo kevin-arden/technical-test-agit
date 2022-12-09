@@ -1,24 +1,26 @@
-import logo from './logo.svg';
-import './App.css';
+import { BrowserRouter, Routes, Route,  Navigate } from "react-router-dom";
+import AuthPage from "./app/pages/login"
+import HomePage from "./app/pages/home"
+import CreatePage from "./app/pages/create"
+import EditPage from "./app/pages/edit"
+import { useSelector } from 'react-redux'
+
 
 function App() {
+  const auth = useSelector(state => state.auth)
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/login" element={<AuthPage />} />
+        <Route path="/home" element={auth.isLoggedIn ? <HomePage /> : <Navigate to="/login" replace />} />
+        
+        <Route path="/create" element={auth.isLoggedIn ? <CreatePage /> : <Navigate to="/login" replace />} />
+        <Route path="/edit/:id" element={auth.isLoggedIn ? <EditPage /> : <Navigate to="/login" replace />} />
+
+        <Route path="/" element={auth.isLoggedIn ? <Navigate to="/home" replace /> : <Navigate to="/login" replace />} />
+      </Routes>
+
+    </BrowserRouter>
   );
 }
 
